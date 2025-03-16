@@ -1,0 +1,166 @@
+<!doctype html>
+<html itemscope="" itemtype="http://schema.org/WebPage" lang="en-IN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="origin" name="referrer">
+  <!-- <meta content="/images/branding/googleg/1x/googleg_standard_color_128dp.png" itemprop="image"> -->
+  <title>Age Visualizer</title>
+</head>
+
+<body>
+
+  <div>
+    <form>
+      <label for="dob">Date of Birth</label>
+      <input id="dob_input" type="date" name="dob" />
+    </form>
+  </div>
+  <div class="btn_wrapper">
+    <button class="view_btn yearly" onclick="renderYearlyView()">Yearly</button>
+    <button class="view_btn monthly" onclick="renderMonthlyView()">Monthly</button>
+    <button class="view_btn weekly">Weekly</button>
+  </div>
+  <div>
+    <table id="render_view">
+    </table>
+  </div>
+
+  <style>
+    .btn_wrapper {
+      margin: 10px;
+      padding: 5px;
+    }
+
+    .btn_wrapper .view_btn {
+      text-transform: uppercase;
+      font-size: 1em;
+      font-weight: 300;
+      margin: 0 20px;
+    }
+
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    table {
+      margin: 10px;
+    }
+
+    td {
+      min-width: 25px;
+      padding: 4px;
+      text-align: center;
+    }
+
+    td.year_count {
+      font-size: small;
+    }
+
+    td.year_count.past {
+      background-color: rgba(0, 255, 0, 0.4);
+      font-weight: 100;
+      font-size: 0.75em;
+    }
+
+    td.year_count.present {
+      background-color: rgba(0, 255, 0, 1);
+      font-weight: 900;
+      font-size: 1em;
+    }
+
+    td.year_count.future {
+      background-color: rgba(255, 0, 0, 0.7);
+      font-weight: 100;
+      font-size: 0.75em;
+    }
+
+    td.year_count.invalid {
+      background-color: rgba(255, 255, 255, 0.7);
+      font-weight: 100;
+      font-size: 0.75em;
+    }
+  </style>
+
+  <script>
+    function renderYearlyView() {
+      const dob = document.getElementById('dob_input').value;
+
+      if (![undefined, null, ""].includes(dob)) {
+        const dob_year = Number(dob.substr(0, 4));
+        const tod_year = new Date().getFullYear();
+
+        let output = "";
+        for (let i = dob_year; i < dob_year + 100; i = i + 10) {
+          output = output.concat(`<tr><td class="year">${i}</td>`)
+          for (let j = 0; j < 10; j = j + 1) {
+            let class_val = "";
+            if (i + j < tod_year) class_val = "past";
+            else if (i + j === tod_year) class_val = "present";
+            else class_val = "future";
+
+            output = output.concat(`<td class="year_count ${class_val}">${j}</td>`)
+          }
+          output = output.concat(`</tr>`)
+        }
+
+        document.getElementById('render_view').innerHTML = output;
+      }
+      else {
+        alert('Please select DOB for the functionality to work!!!');
+        document.getElementById('render_view').innerHTML = "";
+      }
+    }
+
+    function renderMonthlyView() {
+      const dob = document.getElementById('dob_input').value;
+
+      if (![undefined, null, ""].includes(dob)) {
+        const dob_month = Number(dob.substr(5, 2));
+        const tod_month = new Date().getMonth();
+
+        const dob_year = Number(dob.substr(0, 4));
+        const tod_year = new Date().getFullYear();
+
+        let output = "";
+        let year_count = 0;
+
+        for (let i = 0; i < 100; i = i + 1) {
+          if (year_count % 2 === 0) {
+            output = output.concat("<tr>");
+            output = output.concat(`<td class="month">${dob_year + year_count}</td>`)
+          }
+
+          for (let j = 0; j < 12; j = j + 1) {
+            let class_val = "";
+
+            if ((dob_year + i) + (j / 12) < (dob_year) + ((dob_month - 1) / 12)
+              || (dob_year + i) + (j / 12) >= (dob_year + 99) + (dob_month / 12)) class_val = "invalid";
+            else if ((dob_year + i) + (j / 12) < tod_year + (tod_month / 12)) class_val = "past";
+            else if ((dob_year + i) + (j / 12) === tod_year + (tod_month / 12)) class_val = "present";
+            else class_val = "future";
+
+            output = output.concat(`<td class="year_count ${class_val}">${j + 1}</td>`)
+          }
+
+          year_count = year_count + 1;
+          if (year_count % 2 === 0) {
+            output = output.concat("</tr>");
+          }
+        }
+
+        document.getElementById('render_view').innerHTML = output;
+      }
+      else {
+        alert('Please select DOB for the functionality to work!!!');
+        document.getElementById('render_view').innerHTML = "";
+      }
+    }
+  </script>
+</body>
+
+</html>
