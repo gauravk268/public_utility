@@ -21,6 +21,11 @@
     <button class="view_btn monthly" onclick="renderMonthlyView()">Monthly</button>
   </div>
   <div class="render_wrapper wrapper">
+    <div>
+      <p id="id_60"></p>
+      <p id="id_80"></p>
+      <p id="id_100"></p>
+    </div>
     <table id="render_view">
     </table>
   </div>
@@ -28,7 +33,6 @@
   <style>
     body {
       font-size: 1em;
-      /* background: linear-gradient(50deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%); */
       width: 100vw;
       height: 95vh;
       overflow-x: hidden;
@@ -36,30 +40,12 @@
       flex-direction: column;
       justify-content: flex-start;
       text-align: center;
-    }
-
-    /* .patterns {
-      width: 100vw;
-      height: 100vw;
-    }
-
-    .pt1 {
-      background-size: 50px 50px;
-      background-color: #0ae;
-      background-image: -webkit-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-      background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-      background-image: -ms-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-      background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-      background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
-    } */
-
-    .wrapper {
-      /* border: 2px solid red; */
+      padding: 0 20px;
     }
 
     .render_wrapper {
-      overflow: auto;
       display: flex;
+      flex-direction: column;
       justify-content: center;
     }
 
@@ -75,13 +61,15 @@
       margin: 0 20px;
     }
 
+    table#render_view {
+      width: fit-content;
+      margin: auto;
+    }
+
 
     table,
     th,
     td {
-      /* border: 2px solid transparent; */
-      /* border-collapse: collapse; */
-      /* background-color: whitesmoke; */
       border-radius: 5px;
     }
 
@@ -178,6 +166,7 @@
         }
 
         document.getElementById('render_view').innerHTML = output;
+        update_percentage(document.querySelectorAll('.past').length, 1);
       }
       else {
         alert('Please select DOB for the functionality to work!!!');
@@ -225,6 +214,7 @@
         }
 
         document.getElementById('render_view').innerHTML = output;
+        update_percentage(document.querySelectorAll('.past').length, 12);
       }
       else {
         alert('Please select DOB for the functionality to work!!!');
@@ -232,12 +222,17 @@
       }
     }
 
+    function update_percentage(age, multiplier) {
+      document.getElementById('id_60').innerText = `Considering max age 60, ${((age / (60 * multiplier)) * 100).toFixed(2)}% age is lived.`;
+      document.getElementById('id_80').innerText = `Considering max age 80, ${((age / (80 * multiplier)) * 100).toFixed(2)}% age is lived.`;
+      document.getElementById('id_100').innerText = `Considering max age 100, ${((age / (100 * multiplier)) * 100).toFixed(2)}% age is lived.`;
+    }
+
     function main() {
       const locl_dob = get_local_storage();
 
       if (![undefined, null, ''].includes(locl_dob)) {
         document.getElementById('dob_input').value = locl_dob;
-        // alert(`Fetched DOB from previous session: ${locl_dob}`);
         renderYearlyView();
       }
     }
