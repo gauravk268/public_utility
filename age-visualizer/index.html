@@ -4,29 +4,65 @@
 <head>
   <meta charset="UTF-8">
   <meta content="origin" name="referrer">
-  <!-- <meta content="/images/branding/googleg/1x/googleg_standard_color_128dp.png" itemprop="image"> -->
   <title>Age Visualizer</title>
 </head>
 
-<body>
+<body class="patterns pt1">
 
-  <div>
+  <div class="header_wrapper wrapper">
+    <h1>Age Visualizer</h1>
     <form>
       <label for="dob">Date of Birth</label>
       <input id="dob_input" type="date" name="dob" />
     </form>
   </div>
-  <div class="btn_wrapper">
+  <div class="btn_wrapper wrapper">
     <button class="view_btn yearly" onclick="renderYearlyView()">Yearly</button>
     <button class="view_btn monthly" onclick="renderMonthlyView()">Monthly</button>
-    <button class="view_btn weekly">Weekly</button>
   </div>
-  <div>
+  <div class="render_wrapper wrapper">
     <table id="render_view">
     </table>
   </div>
 
   <style>
+    body {
+      font-size: 1em;
+      /* background: linear-gradient(50deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%); */
+      width: 100vw;
+      height: 95vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      text-align: center;
+    }
+
+    /* .patterns {
+      width: 100vw;
+      height: 100vw;
+    }
+
+    .pt1 {
+      background-size: 50px 50px;
+      background-color: #0ae;
+      background-image: -webkit-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+      background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+      background-image: -ms-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+      background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+      background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    } */
+
+    .wrapper {
+      /* border: 2px solid red; */
+    }
+
+    .render_wrapper {
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+    }
+
     .btn_wrapper {
       margin: 10px;
       padding: 5px;
@@ -43,8 +79,10 @@
     table,
     th,
     td {
-      border: 1px solid black;
-      border-collapse: collapse;
+      /* border: 2px solid transparent; */
+      /* border-collapse: collapse; */
+      /* background-color: whitesmoke; */
+      border-radius: 5px;
     }
 
     table {
@@ -55,6 +93,7 @@
       min-width: 25px;
       padding: 4px;
       text-align: center;
+      border: 2px solid transparent;
     }
 
     td.year_count {
@@ -62,33 +101,62 @@
     }
 
     td.year_count.past {
-      background-color: rgba(0, 255, 0, 0.4);
+      background-color: #a52a2a;
       font-weight: 100;
       font-size: 0.75em;
+      color: white;
+      text-shadow: 0 0 2px #000;
+      font-weight: 700;
     }
 
     td.year_count.present {
-      background-color: rgba(0, 255, 0, 1);
+      background-color: #d2b48c;
       font-weight: 900;
       font-size: 1em;
+      color: white;
+      text-shadow: 0 0 2px #000;
     }
 
     td.year_count.future {
-      background-color: rgba(255, 0, 0, 0.7);
+      background-color: #8f9779;
       font-weight: 100;
       font-size: 0.75em;
+      color: white;
+      text-shadow: 0 0 2px #000;
+      font-weight: 700;
+    }
+
+    td.year_count.future_maybe{
+      background-color: #8f9779;
+      font-weight: 100;
+      font-size: 0.75em;
+      color: white;
+      text-shadow: 0 0 2px #000;
+      font-weight: 700;
+      opacity: 0.5;
     }
 
     td.year_count.invalid {
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: #f2ebe2;
+      color: #a52a2a;
       font-weight: 100;
       font-size: 0.75em;
+      font-weight: 700;
     }
   </style>
 
   <script>
+    function update_local_storage(val) {
+      localStorage.setItem('dob', val);
+    }
+
+    function get_local_storage() {
+      return localStorage.getItem('dob');
+    }
+
     function renderYearlyView() {
       const dob = document.getElementById('dob_input').value;
+      update_local_storage(dob);
 
       if (![undefined, null, ""].includes(dob)) {
         const dob_year = Number(dob.substr(0, 4));
@@ -101,6 +169,7 @@
             let class_val = "";
             if (i + j < tod_year) class_val = "past";
             else if (i + j === tod_year) class_val = "present";
+            else if (i+j >= dob_year + 80) class_val = "future_maybe";
             else class_val = "future";
 
             output = output.concat(`<td class="year_count ${class_val}">${j}</td>`)
@@ -118,6 +187,7 @@
 
     function renderMonthlyView() {
       const dob = document.getElementById('dob_input').value;
+      update_local_storage(dob);
 
       if (![undefined, null, ""].includes(dob)) {
         const dob_month = Number(dob.substr(5, 2));
@@ -142,6 +212,7 @@
               || (dob_year + i) + (j / 12) >= (dob_year + 99) + (dob_month / 12)) class_val = "invalid";
             else if ((dob_year + i) + (j / 12) < tod_year + (tod_month / 12)) class_val = "past";
             else if ((dob_year + i) + (j / 12) === tod_year + (tod_month / 12)) class_val = "present";
+            else if ((dob_year + i) + (j / 12) >= dob_year + 80) class_val = "future_maybe";
             else class_val = "future";
 
             output = output.concat(`<td class="year_count ${class_val}">${j + 1}</td>`)
@@ -160,6 +231,18 @@
         document.getElementById('render_view').innerHTML = "";
       }
     }
+
+    function main() {
+      const locl_dob = get_local_storage();
+
+      if (![undefined, null, ''].includes(locl_dob)) {
+        document.getElementById('dob_input').value = locl_dob;
+        // alert(`Fetched DOB from previous session: ${locl_dob}`);
+        renderYearlyView();
+      }
+    }
+
+    main();
   </script>
 </body>
 
