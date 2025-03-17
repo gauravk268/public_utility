@@ -126,7 +126,7 @@
       font-weight: 700;
     }
 
-    td.year_count.future_maybe{
+    td.year_count.future_maybe {
       background-color: #8f9779;
       font-weight: 100;
       font-size: 0.75em;
@@ -169,7 +169,7 @@
             let class_val = "";
             if (i + j < tod_year) class_val = "past";
             else if (i + j === tod_year) class_val = "present";
-            else if (i+j >= dob_year + 80) class_val = "future_maybe";
+            else if (i + j >= dob_year + 80) class_val = "future_maybe";
             else class_val = "future";
 
             output = output.concat(`<td class="year_count ${class_val}">${j}</td>`)
@@ -212,7 +212,7 @@
               || (dob_year + i) + (j / 12) >= (dob_year + 99) + (dob_month / 12)) class_val = "invalid";
             else if ((dob_year + i) + (j / 12) < tod_year + (tod_month / 12)) class_val = "past";
             else if ((dob_year + i) + (j / 12) === tod_year + (tod_month / 12)) class_val = "present";
-            else if ((dob_year + i) + (j / 12) >= dob_year + 80) class_val = "future_maybe";
+            else if ((dob_year + i) + (j / 12) >= (dob_year + 80) + (dob_month / 12)) class_val = "future_maybe";
             else class_val = "future";
 
             output = output.concat(`<td class="year_count ${class_val}">${j + 1}</td>`)
