@@ -31,105 +31,103 @@
   </div>
 
   <style>
+    body,
+    td {
+      text-align: center
+    }
+
     body {
       font-size: 1em;
       width: 100vw;
       height: 95vh;
-      overflow-x: hidden;
+      overflow-x: auto;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      text-align: center;
-      padding: 0 20px;
+      justify-content: flex-start
     }
 
     .render_wrapper {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: center
     }
 
     .btn_wrapper {
       margin: 10px;
-      padding: 5px;
+      padding: 5px
     }
 
     .btn_wrapper .view_btn {
       text-transform: uppercase;
       font-size: 1em;
       font-weight: 300;
-      margin: 0 20px;
+      margin: 0 20px
     }
 
     table#render_view {
       width: fit-content;
-      margin: auto;
+      margin: auto
     }
 
-
     table,
-    th,
-    td {
-      border-radius: 5px;
+    td,
+    th {
+      border-radius: 5px
     }
 
     table {
-      margin: 10px;
+      margin: 10px
     }
 
     td {
       min-width: 25px;
       padding: 4px;
-      text-align: center;
-      border: 2px solid transparent;
+      border: 2px solid transparent
     }
 
     td.year_count {
-      font-size: small;
+      font-size: small
     }
 
     td.year_count.past {
-      background-color: #a52a2a;
-      font-weight: 100;
-      font-size: 0.75em;
-      color: white;
+      background-color: brown;
+      font-size: .75em;
+      color: #fff;
       text-shadow: 0 0 2px #000;
-      font-weight: 700;
+      font-weight: 700
     }
 
     td.year_count.present {
-      background-color: #d2b48c;
+      background-color: tan;
       font-weight: 900;
       font-size: 1em;
-      color: white;
-      text-shadow: 0 0 2px #000;
+      color: #fff;
+      text-shadow: 0 0 2px #000
+    }
+
+    td.year_count.future,
+    td.year_count.future_maybe {
+      background-color: #8f9779;
+      color: #fff;
+      text-shadow: 0 0 2px #000
     }
 
     td.year_count.future {
-      background-color: #8f9779;
-      font-weight: 100;
-      font-size: 0.75em;
-      color: white;
-      text-shadow: 0 0 2px #000;
-      font-weight: 700;
+      font-size: .75em;
+      font-weight: 700
     }
 
     td.year_count.future_maybe {
-      background-color: #8f9779;
-      font-weight: 100;
-      font-size: 0.75em;
-      color: white;
-      text-shadow: 0 0 2px #000;
+      font-size: .75em;
       font-weight: 700;
-      opacity: 0.5;
+      opacity: .5
     }
 
     td.year_count.invalid {
       background-color: #f2ebe2;
-      color: #a52a2a;
-      font-weight: 100;
-      font-size: 0.75em;
-      font-weight: 700;
+      color: brown;
+      font-size: .75em;
+      font-weight: 700
     }
   </style>
 
@@ -233,7 +231,7 @@
 
       if (![undefined, null, ''].includes(locl_dob)) {
         document.getElementById('dob_input').value = locl_dob;
-        renderYearlyView();
+        renderMonthlyView();
       }
     }
 
