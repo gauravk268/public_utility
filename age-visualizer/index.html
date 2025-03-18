@@ -131,15 +131,15 @@
 
   <script>
     function update_local_storage(val) {
-      localStorage.setItem('dob', val);
+      localStorage.setItem("dob", val);
     }
 
     function get_local_storage() {
-      return localStorage.getItem('dob');
+      return localStorage.getItem("dob");
     }
 
     function renderYearlyView() {
-      const dob = document.getElementById('dob_input').value;
+      const dob = document.getElementById("dob_input").value;
       update_local_storage(dob);
 
       if (![undefined, null, ""].includes(dob)) {
@@ -148,7 +148,7 @@
 
         let output = "";
         for (let i = dob_year; i < dob_year + 100; i = i + 10) {
-          output = output.concat(`<tr><td class="year">${i}</td>`)
+          output = output.concat(`<tr><td class="year">${i}</td>`);
           for (let j = 0; j < 10; j = j + 1) {
             let class_val = "";
             if (i + j < tod_year) class_val = "past";
@@ -156,22 +156,21 @@
             else if (i + j >= dob_year + 80) class_val = "future_maybe";
             else class_val = "future";
 
-            output = output.concat(`<td class="year_count ${class_val}">${j}</td>`)
+            output = output.concat(`<td class="year_count ${class_val}">${j}</td>`);
           }
-          output = output.concat(`</tr>`)
+          output = output.concat(`</tr>`);
         }
 
-        document.getElementById('render_view').innerHTML = output;
-        update_percentage(document.querySelectorAll('.past').length, 1);
-      }
-      else {
-        alert('Please select DOB for the functionality to work!!!');
-        document.getElementById('render_view').innerHTML = "";
+        document.getElementById("render_view").innerHTML = output;
+        update_percentage(document.querySelectorAll(".past").length, 1);
+      } else {
+        alert("Please select DOB for the functionality to work!!!");
+        document.getElementById("render_view").innerHTML = "";
       }
     }
 
     function renderMonthlyView() {
-      const dob = document.getElementById('dob_input').value;
+      const dob = document.getElementById("dob_input").value;
       update_local_storage(dob);
 
       if (![undefined, null, ""].includes(dob)) {
@@ -187,20 +186,30 @@
         for (let i = 0; i < 100; i = i + 1) {
           if (year_count % 2 === 0) {
             output = output.concat("<tr>");
-            output = output.concat(`<td class="month">${dob_year + year_count}</td>`)
+            output = output.concat(
+              `<td class="month">${dob_year + year_count}</td>`
+            );
           }
 
           for (let j = 0; j < 12; j = j + 1) {
             let class_val = "";
 
-            if ((dob_year + i) + (j / 12) < (dob_year) + ((dob_month - 1) / 12)
-              || (dob_year + i) + (j / 12) >= (dob_year + 99) + (dob_month / 12)) class_val = "invalid";
-            else if ((dob_year + i) + (j / 12) < tod_year + (tod_month / 12)) class_val = "past";
-            else if ((dob_year + i) + (j / 12) === tod_year + (tod_month / 12)) class_val = "present";
-            else if ((dob_year + i) + (j / 12) >= (dob_year + 80) + (dob_month / 12)) class_val = "future_maybe";
+            if (
+              dob_year + i + j / 12 < dob_year + (dob_month - 1) / 12 ||
+              dob_year + i + j / 12 >= dob_year + 99 + dob_month / 12
+            )
+              class_val = "invalid";
+            else if (dob_year + i + j / 12 < tod_year + tod_month / 12)
+              class_val = "past";
+            else if (dob_year + i + j / 12 === tod_year + tod_month / 12)
+              class_val = "present";
+            else if (dob_year + i + j / 12 >= dob_year + 80 + dob_month / 12)
+              class_val = "future_maybe";
             else class_val = "future";
 
-            output = output.concat(`<td class="year_count ${class_val}">${j + 1}</td>`)
+            output = output.concat(
+              `<td class="year_count ${class_val}">${j + 1}</td>`
+            );
           }
 
           year_count = year_count + 1;
@@ -209,31 +218,40 @@
           }
         }
 
-        document.getElementById('render_view').innerHTML = output;
-        update_percentage(document.querySelectorAll('.past').length, 12);
-      }
-      else {
-        alert('Please select DOB for the functionality to work!!!');
-        document.getElementById('render_view').innerHTML = "";
+        document.getElementById("render_view").innerHTML = output;
+        update_percentage(document.querySelectorAll(".past").length, 12);
+      } else {
+        alert("Please select DOB for the functionality to work!!!");
+        document.getElementById("render_view").innerHTML = "";
       }
     }
 
     function update_percentage(age, multiplier) {
-      document.getElementById('id_60').innerText = `Considering max age 60, ${((age / (60 * multiplier)) * 100).toFixed(2)}% age is lived.`;
-      document.getElementById('id_80').innerText = `Considering max age 80, ${((age / (80 * multiplier)) * 100).toFixed(2)}% age is lived.`;
-      document.getElementById('id_100').innerText = `Considering max age 100, ${((age / (100 * multiplier)) * 100).toFixed(2)}% age is lived.`;
+      document.getElementById("id_60").innerText = `Considering max age 60, ${(
+        (age / (60 * multiplier)) *
+        100
+      ).toFixed(2)}% age is lived.`;
+      document.getElementById("id_80").innerText = `Considering max age 80, ${(
+        (age / (80 * multiplier)) *
+        100
+      ).toFixed(2)}% age is lived.`;
+      document.getElementById("id_100").innerText = `Considering max age 100, ${(
+        (age / (100 * multiplier)) *
+        100
+      ).toFixed(2)}% age is lived.`;
     }
 
     function main() {
       const locl_dob = get_local_storage();
 
-      if (![undefined, null, ''].includes(locl_dob)) {
-        document.getElementById('dob_input').value = locl_dob;
+      if (![undefined, null, ""].includes(locl_dob)) {
+        document.getElementById("dob_input").value = locl_dob;
         renderMonthlyView();
       }
     }
 
     main();
+
   </script>
 </body>
 
