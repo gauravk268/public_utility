@@ -1,35 +1,33 @@
 <!doctype html>
-<html itemscope="" itemtype="http://schema.org/WebPage" lang="en-IN">
+<html itemscope itemtype=http://schema.org/WebPage lang=en-IN>
 
 <head>
-  <meta charset="UTF-8">
-  <meta content="origin" name="referrer">
+  <meta charset=UTF-8>
+  <meta content=origin name=referrer>
   <title>Age Visualizer</title>
 </head>
 
 <body class="patterns pt1">
-
   <div class="header_wrapper wrapper">
     <h1>Age Visualizer</h1>
     <form>
-      <label for="dob">Date of Birth</label>
-      <input id="dob_input" type="date" name="dob" />
+      <label for=dob>Date of Birth</label>
+      <input id=dob_input type=date name=dob>
     </form>
   </div>
   <div class="btn_wrapper wrapper">
-    <button class="view_btn yearly" onclick="renderYearlyView()">Yearly</button>
-    <button class="view_btn monthly" onclick="renderMonthlyView()">Monthly</button>
+    <button class="view_btn yearly" onclick=renderYearlyView()>Yearly</button>
+    <button class="view_btn monthly" onclick=renderMonthlyView()>Monthly</button>
   </div>
   <div class="render_wrapper wrapper">
     <div>
-      <p id="id_60"></p>
-      <p id="id_80"></p>
-      <p id="id_100"></p>
+      <p id=id_60></p>
+      <p id=id_80></p>
+      <p id=id_100></p>
     </div>
-    <table id="render_view">
+    <table id=render_view>
     </table>
   </div>
-
   <style>
     body,
     td {
