@@ -58,8 +58,13 @@
     .btn_wrapper .view_btn {
       text-transform: uppercase;
       font-size: 1em;
-      font-weight: 300;
-      margin: 0 20px
+      font-weight: 400;
+      margin: 0 20px;
+      min-width: 10%;
+      height: 2em;
+      border-radius: 10px;
+      background-color: #E9F2A2;
+      border: 1px solid black;
     }
 
     table#render_view {
@@ -246,7 +251,7 @@
 
       if (![undefined, null, ""].includes(locl_dob)) {
         document.getElementById("dob_input").value = locl_dob;
-        renderMonthlyView();
+        renderYearlyView();
       }
     }
 
