@@ -39,8 +39,11 @@
         <p class="legend_header">Legends:</p>
         <p class="legend" style="background-color: brown; color: #fff;
       text-shadow: 0 0 2px #000;">Past</p>
-        <p class="legend" style="background-color: tan; color: #fff;
-      text-shadow: 0 0 2px #000;">Present</p>
+        <p class="legend" style="background-color: #fff700;
+        font-weight: 900;
+        font-size: 1em;
+        color: black;
+        border: 0.5px solid black;">Present</p>
         <p class="legend" style="background-color: #8f9779; color: #fff;
       text-shadow: 0 0 2px #000;"><=80</p>
         <p class="legend" style="background-color: #8f9779; opacity: 0.5; color: #fff;
@@ -155,12 +158,23 @@
     }
 
     .render_wrapper td.year_count.present {
-      background-color: tan;
+      background-color: #fff700;
       font-weight: 900;
       font-size: 1em;
-      color: #fff;
-      text-shadow: 0 0 2px #000
+      color: black;
+      border: 0.5px solid black;
+      animation: pulseSize 2.5s infinite;
     }
+
+    @keyframes pulseSize {
+      0%, 100% {
+        transform: scale(1.2);
+      }
+      50% {
+        transform: scale(.8);
+      }
+}
+
 
     .render_wrapper td.year_count.future,
     .render_wrapper td.year_count.future_maybe {
