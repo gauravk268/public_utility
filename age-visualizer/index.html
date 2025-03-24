@@ -19,12 +19,24 @@
     <button class="view_btn yearly" onclick=renderYearlyView()>Yearly</button>
     <button class="view_btn monthly" onclick=renderMonthlyView()>Monthly</button>
   </div>
+  <div class="percent_wrapper">
+    <table>
+      <tr>
+        <td style="text-align: left;">Considering max age:</td>
+        <td>60</td>
+        <td>80</td>
+        <td>100</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;">Percent lived:</td>
+        <td id=id_60></td>
+        <td id=id_80>
+          </tdb>
+        <td id=id_100></td>
+      </tr>
+    </table>
+  </div>
   <div class="render_wrapper wrapper">
-    <div>
-      <p id=id_60></p>
-      <p id=id_80></p>
-      <p id=id_100></p>
-    </div>
     <table id=render_view>
     </table>
   </div>
@@ -55,16 +67,40 @@
       padding: 5px
     }
 
-    .btn_wrapper .view_btn {
-      text-transform: uppercase;
-      font-size: 1em;
-      font-weight: 400;
-      margin: 0 20px;
-      min-width: 10%;
-      height: 2em;
-      border-radius: 10px;
-      background-color: #E9F2A2;
-      border: 1px solid black;
+    .view_btn {
+      background: brown;
+      border: 1px solid brown;
+      border-radius: 6px;
+      box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+      box-sizing: border-box;
+      color: #FFFFFF;
+      cursor: pointer;
+      display: inline-block;
+      font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.25rem;
+      min-height: 1.5rem;
+      outline: 0;
+      padding: 5px 10px;
+      text-align: center;
+      text-rendering: geometricprecision;
+      text-transform: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      vertical-align: middle;
+    }
+
+    .view_btn:hover,
+    .view_btn:active {
+      background-color: initial;
+      background-position: 0 0;
+      color: brown;
+    }
+
+    .view_btn:active {
+      opacity: .5;
     }
 
     table#render_view {
@@ -72,27 +108,29 @@
       margin: auto
     }
 
-    table,
-    td,
-    th {
+    .render_wrapper table,
+    .render_wrapper td,
+    .render_wrapper th {
       border-radius: 5px
     }
 
-    table {
-      margin: 10px
+    .render_wrapper table {
+      margin: 10px;
+      border-collapse: separate;
+      border: 1px solid rgba(0, 0, 0, 0.2);
     }
 
-    td {
+    .render_wrapper td {
       min-width: 25px;
       padding: 4px;
       border: 2px solid transparent
     }
 
-    td.year_count {
+    .render_wrapper td.year_count {
       font-size: small
     }
 
-    td.year_count.past {
+    .render_wrapper td.year_count.past {
       background-color: brown;
       font-size: .75em;
       color: #fff;
@@ -100,7 +138,7 @@
       font-weight: 700
     }
 
-    td.year_count.present {
+    .render_wrapper td.year_count.present {
       background-color: tan;
       font-weight: 900;
       font-size: 1em;
@@ -108,29 +146,51 @@
       text-shadow: 0 0 2px #000
     }
 
-    td.year_count.future,
-    td.year_count.future_maybe {
+    .render_wrapper td.year_count.future,
+    .render_wrapper td.year_count.future_maybe {
       background-color: #8f9779;
       color: #fff;
       text-shadow: 0 0 2px #000
     }
 
-    td.year_count.future {
+    .render_wrapper td.year_count.future {
       font-size: .75em;
       font-weight: 700
     }
 
-    td.year_count.future_maybe {
+    .render_wrapper td.year_count.future_maybe {
       font-size: .75em;
       font-weight: 700;
       opacity: .5
     }
 
-    td.year_count.invalid {
+    .render_wrapper td.year_count.invalid {
       background-color: #f2ebe2;
       color: brown;
       font-size: .75em;
       font-weight: 700
+    }
+
+    .percent_wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .percent_wrapper table,
+    .percent_wrapper tr,
+    .percent_wrapper td {
+      border-radius: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .percent_wrapper table {
+      border-radius: 5px;
+    }
+
+    .percent_wrapper td {
+      padding: 5px;
+      text-align: right;
     }
   </style>
 
@@ -232,18 +292,18 @@
     }
 
     function update_percentage(age, multiplier) {
-      document.getElementById("id_60").innerText = `Considering max age 60, ${(
+      document.getElementById("id_60").innerText = `${(
         (age / (60 * multiplier)) *
         100
-      ).toFixed(2)}% age is lived.`;
-      document.getElementById("id_80").innerText = `Considering max age 80, ${(
+      ).toFixed(2)} %`;
+      document.getElementById("id_80").innerText = `${(
         (age / (80 * multiplier)) *
         100
-      ).toFixed(2)}% age is lived.`;
-      document.getElementById("id_100").innerText = `Considering max age 100, ${(
+      ).toFixed(2)} %`;
+      document.getElementById("id_100").innerText = `${(
         (age / (100 * multiplier)) *
         100
-      ).toFixed(2)}% age is lived.`;
+      ).toFixed(2)} %`;
     }
 
     function main() {
