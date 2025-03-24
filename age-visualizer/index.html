@@ -276,7 +276,7 @@
             else if (i + j >= dob_year + 80) class_val = "future_maybe";
             else class_val = "future";
 
-            output = output.concat(`<td class="year_count ${class_val}">${j}</td>`);
+            output = output.concat(`<td class="year_count ${class_val}">${j + i%100}</td>`);
           }
           output = output.concat(`</tr>`);
         }
